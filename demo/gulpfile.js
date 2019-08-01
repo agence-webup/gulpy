@@ -1,5 +1,5 @@
 const gulp = require('gulp')
-const Gulpy = require('../src/Gulpy')
+const Gulpy = require('../src/index')
 
 // config
 const gulpy = new Gulpy({
@@ -10,7 +10,7 @@ const gulpy = new Gulpy({
 const sass = gulpy.sass('src/sass/style.scss', 'dist/css')
 const js = gulpy.js(['src/js/**/*', '!src/js/*.js'], 'dist/js')
 const bundle = gulpy.bundle('src/js/*.js', 'dist/js', 'bundle.js')
-const images = gulpy.images('src/images/**/*', 'dist/img')
+const images = gulpy.images('src/img/**/*', 'dist/img')
 const clean = gulpy.clean(['dist/**'])
 const copyNpm = gulpy.copyNpm()
 const version = gulpy.version()
