@@ -35,3 +35,25 @@ if (gulpy.isProduction()) {
 }
 exports.watch = gulpy.watch()
 ```
+
+## Use it
+
+## Local development:
+
+```
+./node_modules/gulp/bin/gulp.js watch
+```
+
+You can also use browsersync:
+
+```
+./node_modules/gulp/bin/gulp.js watch --proxy http://localhost:8000
+```
+
+## Production:
+
+```
+./node_modules/gulp/bin/gulp.js --production
+```
+
+It will automatically handle production requirement (like files minification) and generate a manifest file for cache busting.
