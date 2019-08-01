@@ -1,0 +1,41 @@
+{
+  "name": "@agence-webup/gulpy",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agence-webup/gulpy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agence-webup/gulpy/issues"
+  },
+  "homepage": "https://github.com/agence-webup/gulpy#readme",
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0"
+  },
+  "dependencies": {
+    "del": "^5.0.0",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-filter": "^6.0.0",
+    "gulp-imagemin": "^6.0.0",
+    "gulp-npm-dist": "^1.0.3",
+    "gulp-npm-files": "^0.1.3",
+    "gulp-rev": "^9.0.0",
+    "gulp-rev-rewrite": "^2.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "node-sass": "^4.12.0"
+  }
+}
