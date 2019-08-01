@@ -1,10 +1,12 @@
 const gulp = require('gulp')
 const Gulpy = require('../src/Gulpy')
 
+// config
 const gulpy = new Gulpy({
-  dist: './dist'
+  browsers: ['> 2%', 'not dead']
 })
 
+// tasks
 const sass = gulpy.sass('src/sass/style.scss', 'dist/css')
 const js = gulpy.js(['src/js/**/*', '!src/js/*.js'], 'dist/js')
 const bundle = gulpy.bundle('src/js/*.js', 'dist/js', 'bundle.js')
@@ -13,8 +15,9 @@ const clean = gulpy.clean(['dist/**'])
 const copyNpm = gulpy.copyNpm()
 const version = gulpy.version()
 
-exports.default = gulp.series(clean, sass, js, bundle, images, copyNpm)
-exports.version = gulp.series(exports.default, version)
-exports.sass = sass
-exports.clean = clean
+// export
+exports.default = gulp.series(clean, gulp.series(sass, js, bundle, images, copyNpm))
+if (gulpy.isProduction()) {
+  exports.default = gulp.series(exports.default, version)
+}
 exports.watch = gulpy.watch()
