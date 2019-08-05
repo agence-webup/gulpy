@@ -12,7 +12,7 @@ const js = gulpy.js(['src/js/**/*', '!src/js/*.js'], 'dist/js')
 const bundle = gulpy.bundle('src/js/*.js', 'dist/js', 'bundle.js')
 const images = gulpy.images('src/img/**/*', 'dist/img')
 const clean = gulpy.clean(['dist/**'])
-const copyNpm = gulpy.copyNpm()
+const copyNpm = gulpy.copyNpm('dist/node_modules')
 const version = gulpy.version()
 
 // export

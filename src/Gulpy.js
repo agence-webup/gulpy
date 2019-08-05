@@ -64,8 +64,8 @@ module.exports = class Gulpy {
     return this.plugins.images.getTask(src, dist)
   }
 
-  copyNpm () {
-    return this.plugins.copyNpm.getTask()
+  copyNpm (dist) {
+    return this.plugins.copyNpm.getTask(dist)
   }
 
   version () {
