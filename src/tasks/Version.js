@@ -8,11 +8,11 @@ module.exports = class Version {
     this.options = options
   }
 
-  getTask () {
+  getTask (src) {
     const assetFilter = filter(['**', '!**/*.css'], { restore: true })
 
     return function version () {
-      return gulp.src('dist/**/*')
+      return gulp.src(src)
         .pipe(assetFilter)
         .pipe(rev()) // rev except CSS
         .pipe(assetFilter.restore)

@@ -68,8 +68,8 @@ module.exports = class Gulpy {
     return this.plugins.copyNpm.getTask(dist)
   }
 
-  version () {
-    return this.plugins.version.getTask()
+  version (src) {
+    return this.plugins.version.getTask(src)
   }
 
   clean (paths) {

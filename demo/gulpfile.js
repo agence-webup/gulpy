@@ -13,7 +13,7 @@ const bundle = gulpy.bundle('src/js/*.js', 'dist/js', 'bundle.js')
 const images = gulpy.images('src/img/**/*', 'dist/img')
 const clean = gulpy.clean(['dist/**'])
 const copyNpm = gulpy.copyNpm('dist/node_modules')
-const version = gulpy.version()
+const version = gulpy.version(['dist/**'])
 
 // export
 exports.default = gulp.series(clean, gulp.series(sass, js, bundle, images, copyNpm))
