@@ -18,9 +18,9 @@ module.exports = class Version {
         .pipe(assetFilter.restore)
         .pipe(revRewrite()) // rewrite URL in CSS
         .pipe(rev()) // rev CSS
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest(src))
         .pipe(rev.manifest())
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest(src))
     }
   }
 }
