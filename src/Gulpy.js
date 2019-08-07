@@ -16,7 +16,7 @@ module.exports = class Gulpy {
     this.argv = argv
 
     const defaultOptions = {
-      browsers: ['> 1%', 'not dead'],
+      manifest: 'rev-manifest.json',
       production: !!argv.production || !!argv.prod,
       proxy: argv.proxy,
       browserSync: browserSync

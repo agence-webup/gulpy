@@ -2,6 +2,7 @@ const gulp = require('gulp')
 const rev = require('gulp-rev')
 const revRewrite = require('gulp-rev-rewrite')
 const filter = require('gulp-filter')
+const helpers = require('../helpers.js')
 
 module.exports = class Version {
   constructor (options) {
@@ -9,18 +10,20 @@ module.exports = class Version {
   }
 
   getTask (src) {
+    const self = this
     const assetFilter = filter(['**', '!**/*.css'], { restore: true })
-
     return function version () {
       return gulp.src(src)
         .pipe(assetFilter)
-        .pipe(rev()) // rev except CSS
+        .pipe(rev())
         .pipe(assetFilter.restore)
-        .pipe(revRewrite()) // rewrite URL in CSS
-        .pipe(rev()) // rev CSS
-        .pipe(gulp.dest(src))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(src))
+        .pipe(revRewrite())
+        .pipe(gulp.dest(helpers.cleanPath(src)))
+        .pipe(rev())
+        .pipe(rev.manifest(self.options.manifest, {
+          merge: true
+        }))
+        .pipe(gulp.dest('./'))
     }
   }
 }
