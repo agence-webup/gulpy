@@ -12,7 +12,7 @@ In your gulpfile.js:
 
 ```js
 const gulp = require('gulp')
-const Gulpy = require('../src/index')
+const Gulpy = require('@agence-webup/gulpy')
 
 // config
 const gulpy = new Gulpy({
