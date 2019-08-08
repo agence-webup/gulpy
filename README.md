@@ -40,14 +40,15 @@ exports.watch = gulpy.watch()
 
 ## Methods
 
-* sass(src, dist)
-* js(src, dist)
-* bundle(src, dist, filename)
-* images(src, dist)
-* clean(dist)
-* copyNpm(dist)
-* version(src)
-* isProduction() 
+* `sass(src, dist)`
+* `js(src, dist)`
+* `bundle(src, dist, filename)`
+* `images(src, dist)`
+* `clean(dist)`
+* `copyNpm(dist)`
+* `version(src)`
+* `watch()` auto watch all configured tasks
+* `isProduction()` return true if the flag --production or --prod is used
 
 `src` and `dist`can be glob strings (https://gulpjs.com/docs/en/getting-started/explaining-globs)
 
