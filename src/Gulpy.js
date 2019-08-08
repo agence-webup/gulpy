@@ -3,6 +3,7 @@ const del = require('del')
 const argv = require('minimist')(process.argv.slice(2))
 const log = require('fancy-log')
 const c = require('ansi-colors')
+const nodePath = require('path')
 const browserSync = require('browser-sync').create()
 
 const _sass = require('./tasks/Sass')
@@ -90,19 +91,22 @@ module.exports = class Gulpy {
 
       // watch Sass
       this.toWatch.sass.forEach((el) => {
-        log.info(`${c.green('Watching Sass:')} ${el[0]}`)
-        gulp.watch(el[0], this.sass(el[0], el[1], true))
+        const splitedPath = el[0].split(nodePath.sep)
+        splitedPath.pop()
+        const toWatch = splitedPath.join(nodePath.sep) + '/**/*.scss'
+        log.info(`${c.green('Watching scss:')} ${toWatch}`)
+        gulp.watch(toWatch, this.sass(el[0], el[1], true))
       })
 
       // watch JS
       this.toWatch.js.forEach((el) => {
-        log.info(`${c.green('Watching JS:')} ${el[0]}`)
+        log.info(`${c.green('Watching js:')} ${el[0]}`)
         gulp.watch(el[0], this.js(el[0], el[1], true))
       })
 
       // watch JS (concat)
       this.toWatch.bundle.forEach((el) => {
-        log.info(`${c.green('Watching JS (bundle):')} ${el[0]}`)
+        log.info(`${c.green('Watching js (bundle):')} ${el[0]}`)
         gulp.watch(el[0], this.bundle(el[0], el[1], el[2], true))
       })
 
