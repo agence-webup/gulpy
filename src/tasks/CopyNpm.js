@@ -36,6 +36,7 @@ module.exports = class CopyNpm {
 
   getTask (dist) {
     const packages = npmDist({
+      replaceDefaultExcludes: true,
       copyUnminified: true,
       excludes: EXCLUDED_FROM_NPM
     })
