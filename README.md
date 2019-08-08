@@ -51,7 +51,7 @@ exports.watch = gulpy.watch()
 
 `src` and `dist`can be glob strings (https://gulpjs.com/docs/en/getting-started/explaining-globs)
 
-## Local development:
+## Local development
 
 ```
 ./node_modules/gulp/bin/gulp.js watch
