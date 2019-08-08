@@ -3,7 +3,8 @@ const del = require('del')
 const argv = require('minimist')(process.argv.slice(2))
 const log = require('fancy-log')
 const c = require('ansi-colors')
-const nodePath = require('path')
+const p = require('path')
+const fs = require('fs')
 const browserSync = require('browser-sync').create()
 
 const _sass = require('./tasks/Sass')
@@ -17,6 +18,7 @@ module.exports = class Gulpy {
     this.argv = argv
 
     const defaultOptions = {
+      publicFolder: null,
       manifest: 'rev-manifest.json',
       production: !!argv.production || !!argv.prod,
       proxy: argv.proxy,
@@ -24,6 +26,8 @@ module.exports = class Gulpy {
     }
 
     this.options = { ...defaultOptions, ...options }
+
+    this._checkup()
 
     this.plugins = {
       sass: new _sass(this.options),
@@ -39,6 +43,24 @@ module.exports = class Gulpy {
       bundle: [],
       images: []
     }
+  }
+
+  _checkup () {
+    if (this.options.publicFolder === null) {
+      log.error(`${c.red('Error: you need to set the publicFolder option')}`)
+      process.exit(1)
+    }
+
+    log.info('Starting Gulpy...')
+
+    if (fs.existsSync('.browserslistrc')) {
+      log.info(`Browserlist config: ${c.cyan('.browserslistrc found')}`)
+    } else {
+      log.error(`Browserlist config: ${c.red('Browserlist: .browserslistrc not found (https://github.com/browserslist/browserslist)')}`)
+    }
+
+    log.info(`Manifest: ${c.cyan(this.options.manifest)}`)
+    log.info(`Public folder: ${c.cyan(this.options.publicFolder)}`)
   }
 
   isProduction () {
@@ -91,9 +113,9 @@ module.exports = class Gulpy {
 
       // watch Sass
       this.toWatch.sass.forEach((el) => {
-        const splitedPath = el[0].split(nodePath.sep)
+        const splitedPath = el[0].split(p.sep)
         splitedPath.pop()
-        const toWatch = splitedPath.join(nodePath.sep) + '/**/*.scss'
+        const toWatch = splitedPath.join(p.sep) + '/**/*.scss'
         log.info(`${c.green('Watching scss:')} ${toWatch}`)
         gulp.watch(toWatch, this.sass(el[0], el[1], true))
       })
