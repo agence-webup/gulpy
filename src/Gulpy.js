@@ -12,6 +12,7 @@ const _copyNpm = require('./tasks/CopyNpm')
 const _scripts = require('./tasks/Scripts')
 const _images = require('./tasks/Images')
 const _version = require('./tasks/Version')
+const _npmVersion = require('./tasks/NpmVersion')
 
 module.exports = class Gulpy {
   constructor (options) {
@@ -20,6 +21,7 @@ module.exports = class Gulpy {
     const defaultOptions = {
       publicFolder: null,
       manifest: 'rev-manifest.json',
+      npmManifest: 'npm-manifest.json',
       production: !!argv.production || !!argv.prod,
       proxy: argv.proxy,
       browserSync: browserSync
@@ -34,7 +36,8 @@ module.exports = class Gulpy {
       copyNpm: new _copyNpm(this.options),
       scripts: new _scripts(this.options),
       images: new _images(this.options),
-      version: new _version(this.options)
+      version: new _version(this.options),
+      npmVersion: new _npmVersion(this.options)
     }
 
     this.toWatch = {
@@ -93,6 +96,10 @@ module.exports = class Gulpy {
 
   version (src) {
     return this.plugins.version.getTask(src)
+  }
+
+  npmVersion () {
+    return this.plugins.npmVersion.getTask()
   }
 
   clean (paths) {
