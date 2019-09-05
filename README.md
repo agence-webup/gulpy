@@ -3,7 +3,7 @@
 ## Install
 
 ```shell
-npm i @agence-webup/gulpy
+npm i -D @agence-webup/gulpy
 ```
 
 ## Example
