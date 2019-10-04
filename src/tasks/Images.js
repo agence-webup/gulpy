@@ -1,5 +1,7 @@
 const gulp = require('gulp')
 const imagemin = require('gulp-imagemin')
+const imageminMozjpeg = require('imagemin-mozjpeg')
+const cache = require('gulp-cache')
 
 module.exports = class Images {
   constructor (options) {
@@ -9,11 +11,15 @@ module.exports = class Images {
   getTask (src, dist) {
     return function images () {
       return gulp.src(src)
-        .pipe(imagemin([
+        .pipe(cache(imagemin([
           imagemin.gifsicle({ interlaced: true }),
-          imagemin.jpegtran({ progressive: true }),
-          imagemin.optipng({ optimizationLevel: 5 })
-        ]))
+          imageminMozjpeg({
+            progressive: true,
+            quality: 75
+          }),
+          imagemin.optipng(),
+          imagemin.svgo()
+        ], { verbose: true })))
         .pipe(gulp.dest(dist))
     }
   }
