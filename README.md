@@ -26,13 +26,14 @@ const sass = gulpy.sass('src/sass/style.scss', 'dist/css') // this will watch al
 const js = gulpy.js(['src/js/**/*', '!src/js/*.js'], 'dist/js')
 const bundle = gulpy.bundle('src/js/*.js', 'dist/js', 'bundle.js')
 const images = gulpy.images('src/img/**/*', 'dist/img')
+const copy = gulpy.copy('src/fonts/**/*', 'dist/fonts')
 const clean = gulpy.clean(['dist/**'])
 const copyNpm = gulpy.copyNpm('dist/node_modules')
 const version = gulpy.version(['dist/**', '!dist/node_modules/**'])
 const npmVersion = gulpy.npmVersion()
 
 // export
-exports.default = gulp.series(clean, gulp.series(sass, js, bundle, images, copyNpm))
+exports.default = gulp.series(clean, gulp.series(sass, js, bundle, images, copy, copyNpm))
 if (gulpy.isProduction()) {
   exports.default = gulp.series(exports.default, version, npmVersion)
 }
@@ -47,9 +48,10 @@ exports.watch = gulpy.watch()
 * `bundle(src, dist, filename)`
 * `images(src, dist)`
 * `clean(dist)`
+* `copy(src, dist)`
 * `copyNpm(dist)`
 * `version(src)`
-* `npmVersion()`generate a cache manifest for node_modules (useful for cache busting)
+* `npmVersion()` generate a cache manifest for node_modules (useful for cache busting)
 * `watch()` auto watch all configured tasks
 * `isProduction()` return true if the flag --production or --prod is used
 

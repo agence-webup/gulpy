@@ -9,6 +9,7 @@ const browserSync = require('browser-sync').create()
 
 const _sass = require('./tasks/Sass')
 const _copyNpm = require('./tasks/CopyNpm')
+const _copy = require('./tasks/Copy')
 const _scripts = require('./tasks/Scripts')
 const _images = require('./tasks/Images')
 const _version = require('./tasks/Version')
@@ -33,6 +34,7 @@ module.exports = class Gulpy {
 
     this.plugins = {
       sass: new _sass(this.options),
+      copy: new _copy(this.options),
       copyNpm: new _copyNpm(this.options),
       scripts: new _scripts(this.options),
       images: new _images(this.options),
@@ -92,6 +94,10 @@ module.exports = class Gulpy {
 
   copyNpm (dist) {
     return this.plugins.copyNpm.getTask(dist)
+  }
+
+  copy (src, dist) {
+    return this.plugins.copy.getTask(src, dist)
   }
 
   version (src) {
