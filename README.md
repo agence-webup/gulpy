@@ -56,6 +56,7 @@ exports.watch = gulpy.watch()
 * `copy(src, dist)`
 * `copyNpm(dist)`
 * `version(src)`
+* `replaceVersion(src, dist)` rewrite occurrences of filenames using the cache manifest in static files
 * `npmVersion()` generate a cache manifest for node_modules (useful for cache busting)
 * `watch()` auto watch all configured tasks
 * `isProduction()` return true if the flag --production or --prod is used
