@@ -13,6 +13,7 @@ const _copy = require('./tasks/Copy')
 const _scripts = require('./tasks/Scripts')
 const _images = require('./tasks/Images')
 const _version = require('./tasks/Version')
+const _replaceVersion = require('./tasks/ReplaceVersion')
 const _npmVersion = require('./tasks/NpmVersion')
 
 module.exports = class Gulpy {
@@ -39,6 +40,7 @@ module.exports = class Gulpy {
       scripts: new _scripts(this.options),
       images: new _images(this.options),
       version: new _version(this.options),
+      replaceVersion: new _replaceVersion(this.options),
       npmVersion: new _npmVersion(this.options)
     }
 
@@ -102,6 +104,10 @@ module.exports = class Gulpy {
 
   version (src) {
     return this.plugins.version.getTask(src)
+  }
+
+  replaceVersion (src, dist) {
+    return this.plugins.replaceVersion.getTask(src, dist)
   }
 
   npmVersion () {

@@ -13,15 +13,19 @@ const sass = gulpy.sass('src/sass/style.scss', 'dist/css')
 const js = gulpy.js(['src/js/**/*', '!src/js/*.js'], 'dist/js')
 const bundle = gulpy.bundle('src/js/*.js', 'dist/js', 'bundle.js')
 const images = gulpy.images('src/img/**/*', 'dist/img')
-const copy = gulpy.copy('src/fonts/**/*', 'dist/fonts')
+const copy = gulp.parallel(
+  gulpy.copy('src/fonts/**/*', 'dist/fonts'),
+  gulpy.copy('src/**/*.html', 'dist')
+)
 const copyNpm = gulpy.copyNpm('dist/node_modules')
-const version = gulpy.version(['dist/**', '!dist/node_modules/**'])
+const version = gulpy.version(['dist/**', '!dist/node_modules/**', '!**/*.html'])
+const replaceVersion = gulpy.replaceVersion('dist/**/*.html', 'dist')
 const npmVersion = gulpy.npmVersion()
 const clean = gulpy.clean(['dist/**'])
 
 // export
 exports.default = gulp.series(clean, gulp.series(sass, js, bundle, images, copy, copyNpm))
 if (gulpy.isProduction()) {
-  exports.default = gulp.series(exports.default, version, npmVersion)
+  exports.default = gulp.series(exports.default, version, replaceVersion, npmVersion)
 }
 exports.watch = gulpy.watch()

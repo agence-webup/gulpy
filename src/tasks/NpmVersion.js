@@ -10,7 +10,6 @@ module.exports = class NpmVersion {
     const self = this
     return function npmVersion (cb) {
       try {
-        console.log(process.cwd())
         const data = fs.readFileSync('./package-lock.json')
         const dependencies = JSON.parse(data).dependencies
         const versions = {}
