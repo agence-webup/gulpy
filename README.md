@@ -67,6 +67,16 @@ exports.watch = gulpy.watch()
 
 `src` and `dist`can be glob strings (https://gulpjs.com/docs/en/getting-started/explaining-globs)
 
+## Cache busting
+
+Cache busting is an important process when you want to work with `Expires` header on the server side. Here are some explanations on how Gulpy handle this workflow:
+
+1. `gulpy.version()` appends a hash to filename by using [gulp-rev](https://github.com/sindresorhus/gulp-rev#readme) `image-1.jpg` → `image-1-7e44430a95.jpg`
+2. `gulpy.version()` also writes a cache manifest file (from the `manifest` option passed to Gulpy constructor)
+3. `gulpy.replaceVersion()` reads the cache manifest file and replaces occurrences of filenames in static files
+`body{background-image:url(img/image-1.jpg)}` → `body{background-image:url(img/image-1-7e44430a95.jpg)}`
+4. `gulp.npmVersion()` generates a cache manifest for node_modules
+
 ## Local development
 
 ```
