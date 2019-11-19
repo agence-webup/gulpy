@@ -22,7 +22,7 @@ const gulpy = new Gulpy({
 })
 
 // tasks
-const sass = gulpy.sass('src/sass/style.scss', 'dist/css') // this will watch all .scss files in src/sass/**/*
+const sass = gulpy.sass('src/sass/style.scss', 'dist/css') // this will automatically watch all .scss files in src/sass/**/*
 const js = gulpy.js(['src/js/**/*', '!src/js/*.js'], 'dist/js')
 const bundle = gulpy.bundle('src/js/*.js', 'dist/js', 'bundle.js')
 const images = gulpy.images('src/img/**/*', 'dist/img')
@@ -49,6 +49,7 @@ exports.watch = gulpy.watch()
 ## Methods
 
 * `sass(src, dist)`
+* `less(src, dist)`
 * `js(src, dist)`
 * `bundle(src, dist, filename)`
 * `images(src, dist)`
