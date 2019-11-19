@@ -8,6 +8,7 @@ const fs = require('fs')
 const browserSync = require('browser-sync').create()
 
 const _sass = require('./tasks/Sass')
+const _less = require('./tasks/Less')
 const _copyNpm = require('./tasks/CopyNpm')
 const _copy = require('./tasks/Copy')
 const _scripts = require('./tasks/Scripts')
@@ -35,6 +36,7 @@ module.exports = class Gulpy {
 
     this.plugins = {
       sass: new _sass(this.options),
+      less: new _less(this.options),
       copy: new _copy(this.options),
       copyNpm: new _copyNpm(this.options),
       scripts: new _scripts(this.options),
@@ -46,6 +48,7 @@ module.exports = class Gulpy {
 
     this.toWatch = {
       sass: [],
+      less: [],
       js: [],
       bundle: [],
       images: []
@@ -77,6 +80,11 @@ module.exports = class Gulpy {
   sass (src, dist, watch = false) {
     if (!watch) this.toWatch.sass.push([src, dist])
     return this.plugins.sass.getTask(src, dist)
+  }
+
+  less (src, dist, watch = false) {
+    if (!watch) this.toWatch.less.push([src, dist])
+    return this.plugins.less.getTask(src, dist)
   }
 
   js (src, dist, watch = false) {
@@ -137,6 +145,15 @@ module.exports = class Gulpy {
         const toWatch = splitedPath.join(p.sep) + '/**/*.scss'
         log.info(`${c.green('Watching scss:')} ${toWatch}`)
         gulp.watch(toWatch, this.sass(el[0], el[1], true))
+      })
+
+      // watch Less
+      this.toWatch.less.forEach((el) => {
+        const splitedPath = el[0].split(p.sep)
+        splitedPath.pop()
+        const toWatch = splitedPath.join(p.sep) + '/**/*.less'
+        log.info(`${c.green('Watching less:')} ${toWatch}`)
+        gulp.watch(toWatch, this.less(el[0], el[1], true))
       })
 
       // watch JS

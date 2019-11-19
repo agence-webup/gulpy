@@ -10,6 +10,7 @@ const gulpy = new Gulpy({
 
 // tasks
 const sass = gulpy.sass('src/sass/style.scss', 'dist/css')
+const less = gulpy.less('src/less/style2.less', 'dist/css')
 const js = gulpy.js(['src/js/**/*', '!src/js/*.js'], 'dist/js')
 const bundle = gulpy.bundle('src/js/*.js', 'dist/js', 'bundle.js')
 const images = gulpy.images('src/img/**/*', 'dist/img')
@@ -24,7 +25,7 @@ const npmVersion = gulpy.npmVersion()
 const clean = gulpy.clean(['dist/**'])
 
 // export
-exports.default = gulp.series(clean, gulp.series(sass, js, bundle, images, copy, copyNpm))
+exports.default = gulp.series(clean, gulp.series(sass, less, js, bundle, images, copy, copyNpm))
 if (gulpy.isProduction()) {
   exports.default = gulp.series(exports.default, version, replaceVersion, npmVersion)
 }
