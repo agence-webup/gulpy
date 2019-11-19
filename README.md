@@ -26,19 +26,18 @@ const sass = gulpy.sass('src/sass/style.scss', 'dist/css') // this will automati
 const js = gulpy.js(['src/js/**/*', '!src/js/*.js'], 'dist/js')
 const bundle = gulpy.bundle('src/js/*.js', 'dist/js', 'bundle.js')
 const images = gulpy.images('src/img/**/*', 'dist/img')
-const copy = gulp.parallel(
-  gulpy.copy('src/fonts/**/*', 'dist/fonts'),
-  gulpy.copy('src/**/*.html', 'dist')
-)
 const copyNpm = gulpy.copyNpm('dist/node_modules')
 const version = gulpy.version(['dist/**', '!dist/node_modules/**', '!**/*.html'])
-// rewrite references to assets revisioned by gulpy.version()
+const npmVersion = gulpy.npmVersion()
+const clean = gulpy.clean(['dist/**'])
 const copy = gulp.parallel(
   gulpy.copy('src/fonts/**/*', 'dist/fonts'),
   gulpy.copy('src/**/*.html', 'dist')
 )
-const npmVersion = gulpy.npmVersion()
-const clean = gulpy.clean(['dist/**'])
+const replaceVersion = gulp.parallel(
+  gulpy.replaceVersion('dist/**/*.css', 'dist'),
+  gulpy.replaceVersion('dist/**/*.html', 'dist')
+)
 
 // export
 exports.default = gulp.series(clean, gulp.series(sass, js, bundle, images, copy, copyNpm))
