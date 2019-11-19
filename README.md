@@ -32,7 +32,11 @@ const copy = gulp.parallel(
 )
 const copyNpm = gulpy.copyNpm('dist/node_modules')
 const version = gulpy.version(['dist/**', '!dist/node_modules/**', '!**/*.html'])
-const replaceVersion = gulpy.replaceVersion('dist/**/*.html', 'dist')
+// rewrite references to assets revisioned by gulpy.version()
+const copy = gulp.parallel(
+  gulpy.copy('src/fonts/**/*', 'dist/fonts'),
+  gulpy.copy('src/**/*.html', 'dist')
+)
 const npmVersion = gulpy.npmVersion()
 const clean = gulpy.clean(['dist/**'])
 
