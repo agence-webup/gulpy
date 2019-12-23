@@ -16,6 +16,7 @@ const _images = require('./tasks/Images')
 const _version = require('./tasks/Version')
 const _replaceVersion = require('./tasks/ReplaceVersion')
 const _npmVersion = require('./tasks/NpmVersion')
+const _exec = require('./tasks/Exec')
 
 module.exports = class Gulpy {
   constructor (options) {
@@ -43,7 +44,8 @@ module.exports = class Gulpy {
       images: new _images(this.options),
       version: new _version(this.options),
       replaceVersion: new _replaceVersion(this.options),
-      npmVersion: new _npmVersion(this.options)
+      npmVersion: new _npmVersion(this.options),
+      exec: new _exec(this.options)
     }
 
     this.toWatch = {
@@ -118,6 +120,10 @@ module.exports = class Gulpy {
     return this.plugins.replaceVersion.getTask(src, dist)
   }
 
+  exec (command) {
+    return this.plugins.exec.getTask(command)
+  }
+
   npmVersion () {
     return this.plugins.npmVersion.getTask()
   }
@@ -144,7 +150,7 @@ module.exports = class Gulpy {
         splitedPath.pop()
         const toWatch = splitedPath.join(p.sep) + '/**/*.scss'
         log.info(`${c.green('Watching scss:')} ${toWatch}`)
-        gulp.watch(toWatch, this.sass(el[0], el[1], true))
+        gulp.watch(toWatch, this.sass(el[0], el[1]))
       })
 
       // watch Less
@@ -153,25 +159,25 @@ module.exports = class Gulpy {
         splitedPath.pop()
         const toWatch = splitedPath.join(p.sep) + '/**/*.less'
         log.info(`${c.green('Watching less:')} ${toWatch}`)
-        gulp.watch(toWatch, this.less(el[0], el[1], true))
+        gulp.watch(toWatch, this.less(el[0], el[1]))
       })
 
       // watch JS
       this.toWatch.js.forEach((el) => {
         log.info(`${c.green('Watching js:')} ${el[0]}`)
-        gulp.watch(el[0], this.js(el[0], el[1], true))
+        gulp.watch(el[0], this.js(el[0], el[1]))
       })
 
       // watch JS (concat)
       this.toWatch.bundle.forEach((el) => {
         log.info(`${c.green('Watching js (bundle):')} ${el[0]}`)
-        gulp.watch(el[0], this.bundle(el[0], el[1], el[2], true))
+        gulp.watch(el[0], this.bundle(el[0], el[1], el[2]))
       })
 
       // watch images
       this.toWatch.images.forEach((el) => {
         log.info(`${c.green('Watching images:')} ${el[0]}`)
-        gulp.watch(el[0], this.images(el[0], el[1], true))
+        gulp.watch(el[0], this.images(el[0], el[1]))
       })
     }
   }

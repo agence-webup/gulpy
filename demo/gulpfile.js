@@ -23,9 +23,10 @@ const version = gulpy.version(['dist/**', '!dist/node_modules/**', '!**/*.html']
 const replaceVersion = gulpy.replaceVersion('dist/**/*.html', 'dist')
 const npmVersion = gulpy.npmVersion()
 const clean = gulpy.clean(['dist/**'])
+const command = gulpy.exec('date')
 
 // export
-exports.default = gulp.series(clean, gulp.series(sass, less, js, bundle, images, copy, copyNpm))
+exports.default = gulp.series(clean, gulp.series(sass, less, js, bundle, images, copy, copyNpm, command))
 if (gulpy.isProduction()) {
   exports.default = gulp.series(exports.default, version, replaceVersion, npmVersion)
 }
