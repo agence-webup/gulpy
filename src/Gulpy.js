@@ -134,6 +134,11 @@ module.exports = class Gulpy {
     }
   }
 
+  addWatch(globs, options = {}, task) {
+    log.info(`Add custom watch: ${c.green(globs)}`)
+    gulp.watch(globs, options, task)
+  }
+
   watch () {
     return () => {
       if (this.options.proxy) {
