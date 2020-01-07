@@ -53,7 +53,8 @@ module.exports = class Gulpy {
       less: [],
       js: [],
       bundle: [],
-      images: []
+      images: [],
+      custom: []
     }
   }
 
@@ -134,9 +135,15 @@ module.exports = class Gulpy {
     }
   }
 
-  addWatch(globs, options = {}, task) {
+  addWatch (globs, options = {}, task) {
+    // respect gulp parameters
+    if (typeof options === 'function') {
+      task = options
+      options = {}
+    }
+
     log.info(`Add custom watch: ${c.green(globs)}`)
-    gulp.watch(globs, options, task)
+    this.toWatch.custom.push([globs, options, task])
   }
 
   watch () {
@@ -148,6 +155,12 @@ module.exports = class Gulpy {
           proxy: this.options.proxy
         })
       }
+
+      // custom
+      this.toWatch.custom.forEach((el) => {
+        console.log(el)
+        gulp.watch(el[0], el[1], el[2])
+      })
 
       // watch Sass
       this.toWatch.sass.forEach((el) => {
