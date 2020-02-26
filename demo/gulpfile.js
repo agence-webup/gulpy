@@ -5,7 +5,11 @@ const Gulpy = require('../src/index')
 const gulpy = new Gulpy({
   publicFolder: 'dist',
   manifest: 'dist/rev-manifest.json',
-  npmManifest: 'dist/npm-manifest.json'
+  npmManifest: 'dist/npm-manifest.json',
+  mozjpeg: {
+    progressive: true,
+    quality: 80
+  }
 })
 
 // tasks

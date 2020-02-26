@@ -29,7 +29,11 @@ module.exports = class Gulpy {
       npmManifest: 'npm-manifest.json',
       production: !!argv.production || !!argv.prod,
       proxy: argv.proxy,
-      browserSync: browserSync
+      browserSync: browserSync,
+      mozjpeg: {
+        progressive: true,
+        quality: 85
+      }
     }
 
     this.options = { ...defaultOptions, ...options }
@@ -75,6 +79,7 @@ module.exports = class Gulpy {
 
     log.info(`Manifest: ${c.cyan(this.options.manifest)}`)
     log.info(`Public folder: ${c.cyan(this.options.publicFolder)}`)
+    log.info(`JPEG quality: ${c.cyan(this.options.mozjpeg.quality)}`)
   }
 
   isProduction () {

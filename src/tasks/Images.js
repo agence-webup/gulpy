@@ -9,14 +9,12 @@ module.exports = class Images {
   }
 
   getTask (src, dist) {
+    const self = this
     return function images () {
       return gulp.src(src)
         .pipe(cache(imagemin([
           imagemin.gifsicle({ interlaced: true }),
-          imageminMozjpeg({
-            progressive: true,
-            quality: 75
-          }),
+          imageminMozjpeg(self.options.mozjpeg),
           imagemin.optipng(),
           imagemin.svgo()
         ], { verbose: true })))
