@@ -29,6 +29,7 @@ module.exports = class Gulpy {
       npmManifest: 'npm-manifest.json',
       production: !!argv.production || !!argv.prod,
       proxy: argv.proxy,
+      serve: argv.serve,
       browserSync: browserSync,
       mozjpeg: {
         progressive: true,
@@ -161,11 +162,22 @@ module.exports = class Gulpy {
 
   watch () {
     return () => {
+      const bsDefaultOptions = {
+        open: false,
+        notify: true
+      }
+
       if (this.options.proxy) {
         browserSync.init({
-          open: false,
-          notify: true,
+          ...bsDefaultOptions,
           proxy: this.options.proxy
+        })
+      } else if (this.options.serve) {
+        browserSync.init({
+          ...bsDefaultOptions,
+          server: {
+            baseDir: this.options.serve
+          }
         })
       }
 
