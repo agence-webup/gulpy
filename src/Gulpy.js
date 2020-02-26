@@ -6,6 +6,7 @@ const c = require('ansi-colors')
 const p = require('path')
 const fs = require('fs')
 const browserSync = require('browser-sync').create()
+const cache = require('gulp-cache')
 
 const _sass = require('./tasks/Sass')
 const _less = require('./tasks/Less')
@@ -135,6 +136,13 @@ module.exports = class Gulpy {
     }
   }
 
+  clearCache () {
+    return function clearCache (cb) {
+      cache.clearAll()
+      cb()
+    }
+  }
+
   addWatch (globs, options = {}, task) {
     // respect gulp parameters
     if (typeof options === 'function') {
@@ -158,7 +166,6 @@ module.exports = class Gulpy {
 
       // custom
       this.toWatch.custom.forEach((el) => {
-        console.log(el)
         gulp.watch(el[0], el[1], el[2])
       })
 

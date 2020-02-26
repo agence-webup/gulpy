@@ -63,6 +63,7 @@ exports.watch = gulpy.watch()
 * `replaceVersion(src, dist)` rewrite occurrences of filenames using the cache manifest in static files
 * `npmVersion()` generate a cache manifest for node_modules (useful for cache busting)
 * `watch()` auto watch all configured tasks
+* `clearCache()` clear the cache (mainly used for images)
 * `isProduction()` return true if the flag --production or --prod is used
 
 `src` and `dist`can be glob strings (https://gulpjs.com/docs/en/getting-started/explaining-globs)

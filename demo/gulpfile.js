@@ -23,7 +23,11 @@ const version = gulpy.version(['dist/**', '!dist/node_modules/**', '!**/*.html']
 const replaceVersion = gulpy.replaceVersion('dist/**/*.html', 'dist')
 const npmVersion = gulpy.npmVersion()
 const clean = gulpy.clean(['dist/**'])
-const command = gulpy.exec('date')
+const command = gulpy.exec('echo "custom command"')
+
+gulpy.addWatch(['src/html/folder1/**/*', 'src/html/folder2/**/*'], {
+  delay: 500
+}, command)
 
 // export
 exports.default = gulp.series(clean, gulp.series(sass, less, js, bundle, images, copy, copyNpm, command))
