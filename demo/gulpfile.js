@@ -15,7 +15,7 @@ const gulpy = new Gulpy({
 // tasks
 const sass = gulpy.sass('src/sass/style.scss', 'dist/css')
 const less = gulpy.less('src/less/style2.less', 'dist/css')
-const js = gulpy.js(['src/js/**/*', '!src/js/*.js'], 'dist/js')
+const js = gulpy.js(['src/js/**/*.js', '!src/js/*.js'], 'dist/js')
 const bundle = gulpy.bundle('src/js/*.js', 'dist/js', 'bundle.js')
 const images = gulpy.images('src/img/**/*', 'dist/img')
 const copy = gulp.parallel(

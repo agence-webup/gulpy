@@ -1,18 +1,13 @@
 module.exports = {
   env: {
-    commonjs: true,
-    es6: true,
-    node: true
+    browser: true,
+    es2021: true
   },
   extends: [
     'standard'
   ],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
-  },
   parserOptions: {
-    ecmaVersion: 2018
+    ecmaVersion: 12
   },
   rules: {
   }
