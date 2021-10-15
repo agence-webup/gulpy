@@ -1,5 +1,5 @@
 const gulp = require('gulp')
-const gulpSass = require('gulp-sass')
+const gulpSass = require('gulp-sass')(require('sass'))
 const autoprefixer = require('gulp-autoprefixer')
 const cleanCSS = require('gulp-clean-css')
 const through = require('through2')

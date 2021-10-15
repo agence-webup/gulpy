@@ -1,3 +1,4 @@
+const fs = require('fs')
 const gulp = require('gulp')
 const revRewrite = require('gulp-rev-rewrite')
 
@@ -10,7 +11,7 @@ module.exports = class ReplaceVersion {
     const self = this
 
     return function replaceVersion () {
-      const manifest = gulp.src(self.options.manifest)
+      const manifest = fs.readFileSync(self.options.manifest)
 
       return gulp.src(src)
         .pipe(revRewrite({ manifest }))

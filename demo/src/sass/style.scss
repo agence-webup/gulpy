@@ -1,5 +1,7 @@
+@use 'sass:math';
 $color: red;
 
 body {
   background-image: url('img/image-1.jpg');
+  font-size: math.div(20,2) + rem;
 }

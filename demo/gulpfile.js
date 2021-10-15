@@ -24,7 +24,7 @@ const copy = gulp.parallel(
 )
 const copyNpm = gulpy.copyNpm('dist/node_modules')
 const version = gulpy.version(['dist/**', '!dist/node_modules/**', '!**/*.html'])
-const replaceVersion = gulpy.replaceVersion('dist/**/*.html', 'dist')
+const replaceVersion = gulpy.replaceVersion('dist/**/*.{css,html}', 'dist')
 const npmVersion = gulpy.npmVersion()
 const clean = gulpy.clean(['dist/**'])
 const command = gulpy.exec('echo "custom command"')
