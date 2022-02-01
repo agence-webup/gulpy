@@ -34,7 +34,8 @@ module.exports = class Gulpy {
       mozjpeg: {
         progressive: true,
         quality: 85
-      }
+      },
+      babelPresetEnv: {}
     }
 
     this.options = { ...defaultOptions, ...options }
