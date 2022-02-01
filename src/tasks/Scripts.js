@@ -16,7 +16,7 @@ module.exports = class Scripts {
       return gulp.src(src)
         .pipe(plumber())
         .pipe(babel({
-          presets: ['@babel/preset-env']
+          presets: [['@babel/preset-env', self.options.babelPresetEnv]]
         }))
         .pipe(self.options.production ? terser() : through.obj())
         .pipe(gulp.dest(dist))

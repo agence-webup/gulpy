@@ -9,6 +9,9 @@ const gulpy = new Gulpy({
   mozjpeg: {
     progressive: true,
     quality: 80
+  },
+  babelPresetEnv: {
+    modules: false
   }
 })
 
