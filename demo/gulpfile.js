@@ -45,16 +45,14 @@ gulpy.addWatch(
 )
 
 // export
-exports.default = gulp.series(
+const buildTask = gulp.series(
   clean,
   gulp.series(sass, less, js, bundle, images, copy, copyNpm, command)
 )
+
 if (gulpy.isProduction()) {
-  exports.default = gulp.series(
-    exports.default,
-    version,
-    replaceVersion,
-    npmVersion
-  )
+  exports.default = gulp.series(buildTask, version, replaceVersion, npmVersion)
+} else {
+  exports.default = buildTask
 }
 exports.watch = gulpy.watch()

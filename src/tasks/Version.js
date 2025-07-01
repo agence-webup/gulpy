@@ -1,5 +1,6 @@
 const gulp = require('gulp')
-const rev = require('gulp-rev')
+const rev = require('gulp-rev').default
+const path = require('path')
 
 module.exports = class Version {
   constructor(options) {
@@ -15,11 +16,11 @@ module.exports = class Version {
         .pipe(rev())
         .pipe(gulp.dest(self.options.publicFolder))
         .pipe(
-          rev.manifest(self.options.manifest, {
+          rev.manifest(path.basename(self.options.manifest), {
             merge: true,
           })
         )
-        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest(self.options.publicFolder))
     }
   }
 }

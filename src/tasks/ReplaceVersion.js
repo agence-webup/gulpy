@@ -1,6 +1,6 @@
 const fs = require('fs')
 const gulp = require('gulp')
-const revRewrite = require('gulp-rev-rewrite')
+const revRewrite = require('gulp-rev-rewrite').default
 
 module.exports = class ReplaceVersion {
   constructor(options) {

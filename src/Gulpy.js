@@ -6,7 +6,6 @@ const c = require('ansi-colors')
 const p = require('path')
 const fs = require('fs')
 const browserSync = require('browser-sync').create()
-const cache = require('gulp-cache')
 
 const _sass = require('./tasks/Sass')
 const _less = require('./tasks/Less')
@@ -140,14 +139,15 @@ module.exports = class Gulpy {
   }
 
   clean(paths) {
-    return function clean() {
-      return del(paths)
+    return async function clean() {
+      const { deleteAsync } = await import('del')
+      return deleteAsync(paths)
     }
   }
 
   clearCache() {
     return function clearCache(cb) {
-      cache.clearAll()
+      // Cache functionality removed for compatibility
       cb()
     }
   }
