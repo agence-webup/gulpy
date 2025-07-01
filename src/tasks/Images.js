@@ -22,12 +22,7 @@ export default class Images {
                   gifsicle({ interlaced: true }),
                   mozjpeg(self.options.mozjpeg),
                   optipng({ optimizationLevel: 5 }),
-                  svgo({
-                    plugins: [
-                      { name: 'removeViewBox', active: false },
-                      { name: 'cleanupIDs', active: false },
-                    ],
-                  }),
+                  svgo(), // Use default SVGO configuration
                 ],
                 { verbose: true }
               )
