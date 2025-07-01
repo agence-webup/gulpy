@@ -1,7 +1,6 @@
-/* eslint-disable-next-line no-unused-vars */
 const Slider = (function () {
   class Slider {
-    constructor () {
+    constructor() {
       console.log('Slider')
     }
   }

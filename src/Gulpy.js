@@ -1,26 +1,28 @@
-const gulp = require('gulp')
-const del = require('del')
-const argv = require('minimist')(process.argv.slice(2))
-const log = require('fancy-log')
-const c = require('ansi-colors')
-const p = require('path')
-const fs = require('fs')
-const browserSync = require('browser-sync').create()
-const cache = require('gulp-cache')
+import gulp from 'gulp'
+import { deleteAsync } from 'del'
+import minimist from 'minimist'
+import log from 'fancy-log'
+import c from 'ansi-colors'
+import p from 'path'
+import fs from 'fs'
+import browserSync from 'browser-sync'
 
-const _sass = require('./tasks/Sass')
-const _less = require('./tasks/Less')
-const _copyNpm = require('./tasks/CopyNpm')
-const _copy = require('./tasks/Copy')
-const _scripts = require('./tasks/Scripts')
-const _images = require('./tasks/Images')
-const _version = require('./tasks/Version')
-const _replaceVersion = require('./tasks/ReplaceVersion')
-const _npmVersion = require('./tasks/NpmVersion')
-const _exec = require('./tasks/Exec')
+import Sass from './tasks/Sass.js'
+import Less from './tasks/Less.js'
+import CopyNpm from './tasks/CopyNpm.js'
+import Copy from './tasks/Copy.js'
+import Scripts from './tasks/Scripts.js'
+import Images from './tasks/Images.js'
+import Version from './tasks/Version.js'
+import ReplaceVersion from './tasks/ReplaceVersion.js'
+import NpmVersion from './tasks/NpmVersion.js'
+import Exec from './tasks/Exec.js'
 
-module.exports = class Gulpy {
-  constructor (options) {
+const argv = minimist(process.argv.slice(2))
+const bs = browserSync.create()
+
+export default class Gulpy {
+  constructor(options) {
     this.argv = argv
 
     const defaultOptions = {
@@ -30,12 +32,12 @@ module.exports = class Gulpy {
       production: !!argv.production || !!argv.prod,
       proxy: argv.proxy,
       serve: argv.serve,
-      browserSync: browserSync,
+      browserSync: bs,
       mozjpeg: {
         progressive: true,
-        quality: 85
+        quality: 85,
       },
-      babelPresetEnv: {}
+      babelPresetEnv: {},
     }
 
     this.options = { ...defaultOptions, ...options }
@@ -43,16 +45,16 @@ module.exports = class Gulpy {
     this._checkup()
 
     this.plugins = {
-      sass: new _sass(this.options),
-      less: new _less(this.options),
-      copy: new _copy(this.options),
-      copyNpm: new _copyNpm(this.options),
-      scripts: new _scripts(this.options),
-      images: new _images(this.options),
-      version: new _version(this.options),
-      replaceVersion: new _replaceVersion(this.options),
-      npmVersion: new _npmVersion(this.options),
-      exec: new _exec(this.options)
+      sass: new Sass(this.options),
+      less: new Less(this.options),
+      copy: new Copy(this.options),
+      copyNpm: new CopyNpm(this.options),
+      scripts: new Scripts(this.options),
+      images: new Images(this.options),
+      version: new Version(this.options),
+      replaceVersion: new ReplaceVersion(this.options),
+      npmVersion: new NpmVersion(this.options),
+      exec: new Exec(this.options),
     }
 
     this.toWatch = {
@@ -61,11 +63,11 @@ module.exports = class Gulpy {
       js: [],
       bundle: [],
       images: [],
-      custom: []
+      custom: [],
     }
   }
 
-  _checkup () {
+  _checkup() {
     if (this.options.publicFolder === null) {
       log.error(`${c.red('Error: you need to set the publicFolder option')}`)
       process.exit(1)
@@ -76,7 +78,9 @@ module.exports = class Gulpy {
     if (fs.existsSync('.browserslistrc')) {
       log.info(`Browserlist config: ${c.cyan('.browserslistrc found')}`)
     } else {
-      log.error(`Browserlist config: ${c.red('Browserlist: .browserslistrc not found (https://github.com/browserslist/browserslist)')}`)
+      log.error(
+        `Browserlist config: ${c.red('Browserlist: .browserslistrc not found (https://github.com/browserslist/browserslist)')}`
+      )
     }
 
     log.info(`Manifest: ${c.cyan(this.options.manifest)}`)
@@ -84,73 +88,73 @@ module.exports = class Gulpy {
     log.info(`JPEG quality: ${c.cyan(this.options.mozjpeg.quality)}`)
   }
 
-  isProduction () {
+  isProduction() {
     return this.options.production
   }
 
-  sass (src, dist, watch = false) {
+  sass(src, dist, watch = false) {
     if (!watch) this.toWatch.sass.push([src, dist])
     return this.plugins.sass.getTask(src, dist)
   }
 
-  less (src, dist, watch = false) {
+  less(src, dist, watch = false) {
     if (!watch) this.toWatch.less.push([src, dist])
     return this.plugins.less.getTask(src, dist)
   }
 
-  js (src, dist, watch = false) {
+  js(src, dist, watch = false) {
     if (!watch) this.toWatch.js.push([src, dist])
     return this.plugins.scripts.getTaskJs(src, dist)
   }
 
-  bundle (src, dist, filename, watch = false) {
+  bundle(src, dist, filename, watch = false) {
     if (!watch) this.toWatch.bundle.push([src, dist, filename])
     return this.plugins.scripts.getTaskBundle(src, dist, filename)
   }
 
-  images (src, dist, watch = false) {
+  images(src, dist, watch = false) {
     if (!watch) this.toWatch.images.push([src, dist])
     return this.plugins.images.getTask(src, dist)
   }
 
-  copyNpm (dist) {
+  copyNpm(dist) {
     return this.plugins.copyNpm.getTask(dist)
   }
 
-  copy (src, dist) {
+  copy(src, dist) {
     return this.plugins.copy.getTask(src, dist)
   }
 
-  version (src) {
+  version(src) {
     return this.plugins.version.getTask(src)
   }
 
-  replaceVersion (src, dist) {
+  replaceVersion(src, dist) {
     return this.plugins.replaceVersion.getTask(src, dist)
   }
 
-  exec (command) {
+  exec(command) {
     return this.plugins.exec.getTask(command)
   }
 
-  npmVersion () {
+  npmVersion() {
     return this.plugins.npmVersion.getTask()
   }
 
-  clean (paths) {
-    return function clean () {
-      return del(paths)
+  clean(paths) {
+    return async function clean() {
+      return deleteAsync(paths)
     }
   }
 
-  clearCache () {
-    return function clearCache (cb) {
-      cache.clearAll()
+  clearCache() {
+    return function clearCache(cb) {
+      // Cache functionality removed for compatibility
       cb()
     }
   }
 
-  addWatch (globs, options = {}, task) {
+  addWatch(globs, options = {}, task) {
     // respect gulp parameters
     if (typeof options === 'function') {
       task = options
@@ -161,24 +165,24 @@ module.exports = class Gulpy {
     this.toWatch.custom.push([globs, options, task])
   }
 
-  watch () {
+  watch() {
     return () => {
       const bsDefaultOptions = {
         open: false,
-        notify: true
+        notify: true,
       }
 
       if (this.options.proxy) {
         browserSync.init({
           ...bsDefaultOptions,
-          proxy: this.options.proxy
+          proxy: this.options.proxy,
         })
       } else if (this.options.serve) {
         browserSync.init({
           ...bsDefaultOptions,
           server: {
-            baseDir: this.options.serve
-          }
+            baseDir: this.options.serve,
+          },
         })
       }
 

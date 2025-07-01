@@ -1,14 +1,14 @@
-const _exec = require('child_process').exec
-const log = require('fancy-log')
-const c = require('ansi-colors')
+import { exec as _exec } from 'child_process'
+import log from 'fancy-log'
+import c from 'ansi-colors'
 
-module.exports = class Command {
-  constructor (options) {
+export default class Command {
+  constructor(options) {
     this.options = options
   }
 
-  getTask (command) {
-    return function exec (cb) {
+  getTask(command) {
+    return function exec(cb) {
       _exec(command, (err, stdout, stderr) => {
         if (err) return cb(new Error(err))
         log('Running command...')

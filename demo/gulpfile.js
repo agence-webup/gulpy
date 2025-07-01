@@ -1,5 +1,5 @@
-const gulp = require('gulp')
-const Gulpy = require('../src/index')
+import gulp from 'gulp'
+import Gulpy from '../src/index.js'
 
 // config
 const gulpy = new Gulpy({
@@ -8,11 +8,11 @@ const gulpy = new Gulpy({
   npmManifest: 'dist/npm-manifest.json',
   mozjpeg: {
     progressive: true,
-    quality: 80
+    quality: 80,
   },
   babelPresetEnv: {
-    modules: false
-  }
+    modules: false,
+  },
 })
 
 // tasks
@@ -26,19 +26,34 @@ const copy = gulp.parallel(
   gulpy.copy('src/**/*.html', 'dist')
 )
 const copyNpm = gulpy.copyNpm('dist/node_modules')
-const version = gulpy.version(['dist/**', '!dist/node_modules/**', '!**/*.html'])
+const version = gulpy.version([
+  'dist/**',
+  '!dist/node_modules/**',
+  '!**/*.html',
+])
 const replaceVersion = gulpy.replaceVersion('dist/**/*.{css,html}', 'dist')
 const npmVersion = gulpy.npmVersion()
 const clean = gulpy.clean(['dist/**'])
 const command = gulpy.exec('echo "custom command"')
 
-gulpy.addWatch(['src/html/folder1/**/*', 'src/html/folder2/**/*'], {
-  delay: 500
-}, command)
+gulpy.addWatch(
+  ['src/html/folder1/**/*', 'src/html/folder2/**/*'],
+  {
+    delay: 500,
+  },
+  command
+)
 
 // export
-exports.default = gulp.series(clean, gulp.series(sass, less, js, bundle, images, copy, copyNpm, command))
+const buildTask = gulp.series(
+  clean,
+  gulp.series(sass, less, js, bundle, images, copy, copyNpm, command)
+)
+
+let defaultTask = buildTask
 if (gulpy.isProduction()) {
-  exports.default = gulp.series(exports.default, version, replaceVersion, npmVersion)
+  defaultTask = gulp.series(buildTask, version, replaceVersion, npmVersion)
 }
-exports.watch = gulpy.watch()
+
+export default defaultTask
+export const watch = gulpy.watch()

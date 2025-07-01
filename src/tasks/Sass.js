@@ -1,22 +1,28 @@
-const gulp = require('gulp')
-const gulpSass = require('gulp-sass')(require('sass'))
-const autoprefixer = require('gulp-autoprefixer')
-const cleanCSS = require('gulp-clean-css')
-const through = require('through2')
+import gulp from 'gulp'
+import gulpSass from 'gulp-sass'
+import * as sass from 'sass'
+import autoprefixer from 'gulp-autoprefixer'
+import cleanCSS from 'gulp-clean-css'
+import through from 'through2'
 
-module.exports = class Sass {
-  constructor (options) {
+const gulpSassInstance = gulpSass(sass)
+
+export default class Sass {
+  constructor(options) {
     this.options = options
   }
 
-  getTask (src, dist) {
+  getTask(src, dist) {
     const self = this
-    return function sass () {
-      return gulp.src(src)
-        .pipe(gulpSass().on('error', gulpSass.logError))
-        .pipe(autoprefixer({
-          overrideBrowserslist: self.options.browsers
-        }))
+    return function sass() {
+      return gulp
+        .src(src)
+        .pipe(gulpSassInstance().on('error', gulpSassInstance.logError))
+        .pipe(
+          autoprefixer({
+            overrideBrowserslist: self.options.browsers,
+          })
+        )
         .pipe(self.options.production ? cleanCSS() : through.obj())
         .pipe(gulp.dest(dist))
         .pipe(self.options.browserSync.stream())

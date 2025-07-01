@@ -1,21 +1,19 @@
-const fs = require('fs')
-const gulp = require('gulp')
-const revRewrite = require('gulp-rev-rewrite')
+import fs from 'fs'
+import gulp from 'gulp'
+import revRewrite from 'gulp-rev-rewrite'
 
-module.exports = class ReplaceVersion {
-  constructor (options) {
+export default class ReplaceVersion {
+  constructor(options) {
     this.options = options
   }
 
-  getTask (src, dist) {
+  getTask(src, dist) {
     const self = this
 
-    return function replaceVersion () {
+    return function replaceVersion() {
       const manifest = fs.readFileSync(self.options.manifest)
 
-      return gulp.src(src)
-        .pipe(revRewrite({ manifest }))
-        .pipe(gulp.dest(dist))
+      return gulp.src(src).pipe(revRewrite({ manifest })).pipe(gulp.dest(dist))
     }
   }
 }

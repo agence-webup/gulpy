@@ -1,5 +1,5 @@
-const gulp = require('gulp')
-const npmDist = require('gulp-npm-dist')
+import gulp from 'gulp'
+import npmDist from 'gulp-npm-dist'
 
 const EXCLUDED_FROM_NPM = [
   '*.map',
@@ -26,28 +26,29 @@ const EXCLUDED_FROM_NPM = [
   '*.coffee',
   '*.ts',
   '*.scss',
-  '*.less'
+  '*.less',
 ]
 
-module.exports = class CopyNpm {
-  constructor (options) {
+export default class CopyNpm {
+  constructor(options) {
     this.options = options
   }
 
-  getTask (dist) {
+  getTask(dist) {
     const packages = npmDist({
       replaceDefaultExcludes: true,
       copyUnminified: true,
-      excludes: EXCLUDED_FROM_NPM
+      excludes: EXCLUDED_FROM_NPM,
     })
     // if there is no packages to copy
     if (packages.length === 0) {
-      return function copyNpm () {
+      return function copyNpm() {
         return Promise.resolve()
       }
     } else {
-      return function copyNpm () {
-        return gulp.src(packages, { base: './node_modules' })
+      return function copyNpm() {
+        return gulp
+          .src(packages, { base: './node_modules' })
           .pipe(gulp.dest(dist))
       }
     }
