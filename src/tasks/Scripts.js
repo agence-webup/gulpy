@@ -6,31 +6,37 @@ const plumber = require('gulp-plumber')
 const through = require('through2')
 
 module.exports = class Scripts {
-  constructor (options) {
+  constructor(options) {
     this.options = options
   }
 
-  getTaskJs (src, dist) {
+  getTaskJs(src, dist) {
     const self = this
-    return function js () {
-      return gulp.src(src)
+    return function js() {
+      return gulp
+        .src(src)
         .pipe(plumber())
-        .pipe(babel({
-          presets: [['@babel/preset-env', self.options.babelPresetEnv]]
-        }))
+        .pipe(
+          babel({
+            presets: [['@babel/preset-env', self.options.babelPresetEnv]],
+          })
+        )
         .pipe(self.options.production ? terser() : through.obj())
         .pipe(gulp.dest(dist))
     }
   }
 
-  getTaskBundle (src, dist, filename) {
+  getTaskBundle(src, dist, filename) {
     const self = this
-    return function bundle () {
-      return gulp.src(src)
+    return function bundle() {
+      return gulp
+        .src(src)
         .pipe(plumber())
-        .pipe(babel({
-          presets: ['@babel/preset-env']
-        }))
+        .pipe(
+          babel({
+            presets: ['@babel/preset-env'],
+          })
+        )
         .pipe(self.options.production ? terser() : through.obj())
         .pipe(concat(filename))
         .pipe(gulp.dest(dist))

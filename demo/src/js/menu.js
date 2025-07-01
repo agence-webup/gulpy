@@ -1,7 +1,6 @@
-/* eslint-disable-next-line no-unused-vars */
 const Menu = (function () {
   class Menu {
-    constructor () {
+    constructor() {
       console.log('Menu')
     }
   }
