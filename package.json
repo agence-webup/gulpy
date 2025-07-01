@@ -1,6 +1,6 @@
 {
   "name": "@agence-webup/gulpy",
-  "version": "2.0.1",
+  "version": "3.0.0-beta.1",
   "description": "",
   "type": "module",
   "main": "src/index.js",
