@@ -1,10 +1,10 @@
-const gulp = require('gulp')
-const gulpLess = require('gulp-less')
-const autoprefixer = require('gulp-autoprefixer').default
-const cleanCSS = require('gulp-clean-css')
-const through = require('through2')
+import gulp from 'gulp'
+import gulpLess from 'gulp-less'
+import autoprefixer from 'gulp-autoprefixer'
+import cleanCSS from 'gulp-clean-css'
+import through from 'through2'
 
-module.exports = class Less {
+export default class Less {
   constructor(options) {
     this.options = options
   }

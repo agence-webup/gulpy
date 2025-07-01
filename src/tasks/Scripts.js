@@ -1,11 +1,11 @@
-const gulp = require('gulp')
-const terser = require('gulp-terser')
-const concat = require('gulp-concat')
-const babel = require('gulp-babel')
-const plumber = require('gulp-plumber')
-const through = require('through2')
+import gulp from 'gulp'
+import terser from 'gulp-terser'
+import concat from 'gulp-concat'
+import babel from 'gulp-babel'
+import plumber from 'gulp-plumber'
+import through from 'through2'
 
-module.exports = class Scripts {
+export default class Scripts {
   constructor(options) {
     this.options = options
   }

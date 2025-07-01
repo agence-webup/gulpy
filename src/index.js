@@ -1,3 +1,3 @@
-const Gulpy = require('../src/Gulpy')
+import Gulpy from './Gulpy.js'
 
-module.exports = Gulpy
+export default Gulpy

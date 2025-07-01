@@ -1,5 +1,5 @@
-const gulp = require('gulp')
-const npmDist = require('gulp-npm-dist')
+import gulp from 'gulp'
+import npmDist from 'gulp-npm-dist'
 
 const EXCLUDED_FROM_NPM = [
   '*.map',
@@ -29,7 +29,7 @@ const EXCLUDED_FROM_NPM = [
   '*.less',
 ]
 
-module.exports = class CopyNpm {
+export default class CopyNpm {
   constructor(options) {
     this.options = options
   }

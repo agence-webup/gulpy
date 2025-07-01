@@ -1,6 +1,6 @@
-const gulp = require('gulp')
+import gulp from 'gulp'
 
-module.exports = class Copy {
+export default class Copy {
   constructor(options) {
     this.options = options
   }

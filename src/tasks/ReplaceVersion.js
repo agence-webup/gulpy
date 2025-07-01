@@ -1,8 +1,8 @@
-const fs = require('fs')
-const gulp = require('gulp')
-const revRewrite = require('gulp-rev-rewrite').default
+import fs from 'fs'
+import gulp from 'gulp'
+import revRewrite from 'gulp-rev-rewrite'
 
-module.exports = class ReplaceVersion {
+export default class ReplaceVersion {
   constructor(options) {
     this.options = options
   }

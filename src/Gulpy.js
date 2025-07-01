@@ -1,24 +1,27 @@
-const gulp = require('gulp')
-const del = require('del')
-const argv = require('minimist')(process.argv.slice(2))
-const log = require('fancy-log')
-const c = require('ansi-colors')
-const p = require('path')
-const fs = require('fs')
-const browserSync = require('browser-sync').create()
+import gulp from 'gulp'
+import { deleteAsync } from 'del'
+import minimist from 'minimist'
+import log from 'fancy-log'
+import c from 'ansi-colors'
+import p from 'path'
+import fs from 'fs'
+import browserSync from 'browser-sync'
 
-const _sass = require('./tasks/Sass')
-const _less = require('./tasks/Less')
-const _copyNpm = require('./tasks/CopyNpm')
-const _copy = require('./tasks/Copy')
-const _scripts = require('./tasks/Scripts')
-const _images = require('./tasks/Images')
-const _version = require('./tasks/Version')
-const _replaceVersion = require('./tasks/ReplaceVersion')
-const _npmVersion = require('./tasks/NpmVersion')
-const _exec = require('./tasks/Exec')
+import Sass from './tasks/Sass.js'
+import Less from './tasks/Less.js'
+import CopyNpm from './tasks/CopyNpm.js'
+import Copy from './tasks/Copy.js'
+import Scripts from './tasks/Scripts.js'
+import Images from './tasks/Images.js'
+import Version from './tasks/Version.js'
+import ReplaceVersion from './tasks/ReplaceVersion.js'
+import NpmVersion from './tasks/NpmVersion.js'
+import Exec from './tasks/Exec.js'
 
-module.exports = class Gulpy {
+const argv = minimist(process.argv.slice(2))
+const bs = browserSync.create()
+
+export default class Gulpy {
   constructor(options) {
     this.argv = argv
 
@@ -29,7 +32,7 @@ module.exports = class Gulpy {
       production: !!argv.production || !!argv.prod,
       proxy: argv.proxy,
       serve: argv.serve,
-      browserSync: browserSync,
+      browserSync: bs,
       mozjpeg: {
         progressive: true,
         quality: 85,
@@ -42,16 +45,16 @@ module.exports = class Gulpy {
     this._checkup()
 
     this.plugins = {
-      sass: new _sass(this.options),
-      less: new _less(this.options),
-      copy: new _copy(this.options),
-      copyNpm: new _copyNpm(this.options),
-      scripts: new _scripts(this.options),
-      images: new _images(this.options),
-      version: new _version(this.options),
-      replaceVersion: new _replaceVersion(this.options),
-      npmVersion: new _npmVersion(this.options),
-      exec: new _exec(this.options),
+      sass: new Sass(this.options),
+      less: new Less(this.options),
+      copy: new Copy(this.options),
+      copyNpm: new CopyNpm(this.options),
+      scripts: new Scripts(this.options),
+      images: new Images(this.options),
+      version: new Version(this.options),
+      replaceVersion: new ReplaceVersion(this.options),
+      npmVersion: new NpmVersion(this.options),
+      exec: new Exec(this.options),
     }
 
     this.toWatch = {
@@ -140,7 +143,6 @@ module.exports = class Gulpy {
 
   clean(paths) {
     return async function clean() {
-      const { deleteAsync } = await import('del')
       return deleteAsync(paths)
     }
   }

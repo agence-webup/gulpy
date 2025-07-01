@@ -1,5 +1,5 @@
-const gulp = require('gulp')
-const Gulpy = require('../src/index')
+import gulp from 'gulp'
+import Gulpy from '../src/index.js'
 
 // config
 const gulpy = new Gulpy({
@@ -50,9 +50,10 @@ const buildTask = gulp.series(
   gulp.series(sass, less, js, bundle, images, copy, copyNpm, command)
 )
 
+let defaultTask = buildTask
 if (gulpy.isProduction()) {
-  exports.default = gulp.series(buildTask, version, replaceVersion, npmVersion)
-} else {
-  exports.default = buildTask
+  defaultTask = gulp.series(buildTask, version, replaceVersion, npmVersion)
 }
-exports.watch = gulpy.watch()
+
+export default defaultTask
+export const watch = gulpy.watch()

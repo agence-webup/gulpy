@@ -1,6 +1,6 @@
-const gulp = require('gulp')
+import gulp from 'gulp'
 
-module.exports = class Images {
+export default class Images {
   constructor(options) {
     this.options = options
   }

@@ -2,7 +2,11 @@
   "name": "@agence-webup/gulpy",
   "version": "2.0.1",
   "description": "",
+  "type": "module",
   "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
   "scripts": {
     "dev": "./node_modules/gulp/bin/gulp.js --gulpfile demo/gulpfile.js",
     "prod": "./node_modules/gulp/bin/gulp.js --gulpfile demo/gulpfile.js --production",

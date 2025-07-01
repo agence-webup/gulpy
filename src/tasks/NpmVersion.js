@@ -1,7 +1,7 @@
-const fs = require('fs')
-const crypto = require('crypto')
+import fs from 'fs'
+import crypto from 'crypto'
 
-module.exports = class NpmVersion {
+export default class NpmVersion {
   constructor(options) {
     this.options = options
   }

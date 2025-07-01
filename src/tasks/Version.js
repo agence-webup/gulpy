@@ -1,8 +1,8 @@
-const gulp = require('gulp')
-const rev = require('gulp-rev').default
-const path = require('path')
+import gulp from 'gulp'
+import rev from 'gulp-rev'
+import path from 'path'
 
-module.exports = class Version {
+export default class Version {
   constructor(options) {
     this.options = options
   }
